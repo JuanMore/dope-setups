@@ -8,6 +8,8 @@ import Footer from './Components/UI/Footer';
 import PrivateRoute from './Components/PrivateRoute';
 import Home from './Pages/Home';
 import About from './Pages/About';
+import Categorize from './Pages/Categorize'
+import ExploreSetups from './Pages/ExploreSetups';
 import Login from './Pages/Login';
 import Profile from './Pages/Profile';
 import Register from './Pages/Register';
@@ -29,7 +31,9 @@ function App() {
         <Header />
         <Routes>
           <Route path='/' element={<Home />} />
-          <Route path='/about' element={<About />} />
+            <Route path='/about' element={<About />} />
+            <Route path='/explore-setups' element={<ExploreSetups />} />
+            <Route path='/category/:categoryName' element={<Categorize />} />
           <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
             {/* private route */}

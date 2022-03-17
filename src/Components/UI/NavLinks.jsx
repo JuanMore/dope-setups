@@ -7,6 +7,7 @@ function NavLinks() {
 
         <li className="nav-list-item"><Link to="/" className="nav-link">Home</Link></li>
         <li className="nav-list-item"><Link to="/about" className="nav-link">About</Link></li>
+        <li className="nav-list-item"><Link to="/explore-setups" className="nav-link">Categories</Link></li>
         <li className="nav-list-item"><Link to="/profile" className="nav-link">Account</Link></li>
         <li className="nav-list-item"><Link to="/login" className="nav-link">Login</Link></li>  
         <li className="nav-list-item"><Link to="/register" className="nav-link btn-login">Register</Link></li>

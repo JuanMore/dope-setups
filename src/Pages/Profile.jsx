@@ -6,7 +6,7 @@ import { getAuth, updateProfile } from "firebase/auth"
 import {toast} from "react-toastify"
 
 
-function Profile() {
+function Account() {
   const auth = getAuth()
   const [updateDetails, setUpdateDetails] = useState(false)
   const [formData, setFormData] = useState({
@@ -59,15 +59,15 @@ function Profile() {
     }))
   }
 
-  return <div className="profile">
-    <header className="profileHeader">
+  return <div className="account">
+    <header className="acountHeader">
       <div className="pageHeader">
         My Profile
       </div>
     </header>
     <main>
-      <div className="profileDetailsHeader">
-        <p className="profileDetailsText">Account Details</p>
+      <div className="accountDetailsHeader">
+        <p className="accountDetailsText">Account Details</p>
         <p className="changeAccountDetails" onClick={() => {
           updateDetails && onSubmit()
           setUpdateDetails((prevState) => !prevState)
@@ -75,19 +75,19 @@ function Profile() {
           {updateDetails ? 'Done' : 'Update'}
         </p>
       </div>
-      <div className="profileCard">
+      <div className="accountCard">
         <form>
           <input type="text" id="name"
-            className={!updateDetails ? 'profileName' :
-              'profileNameActive'}
+            className={!updateDetails ? 'accountName' :
+              'accountNameActive'}
             disabled={!updateDetails}
             value={name}
             onChange={onChange}
 
           />
            <input type="text" id="name"
-            className={!updateDetails ? 'profileEmail' :
-              'profileEmailActive'}
+            className={!updateDetails ? 'accountEmail' :
+              'accountEmailActive'}
             disabled={!updateDetails}
             value={email}
             onChange={onChange}
@@ -102,4 +102,4 @@ function Profile() {
   </div>
 }
 
-export default Profile
+export default Account
