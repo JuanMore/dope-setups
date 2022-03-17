@@ -86,7 +86,7 @@ function Categorize() {
                           </Masonry>
                       </ResponsiveMasonry>
                   </main>
-              ) : <p>No setups to display for {params.categoryName}</p>
+              ) : <p>No setups to display for '{params.categoryName}'</p>
               }
     </div>
   )

@@ -295,6 +295,31 @@
   width: 100%;
 }
 
+/* About Page */
+.about {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  max-width: 700px;
+  padding: 0 20px;
+}
+
+.aboutHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.aboutCard {
+  background-color: #ffffff;
+  color: #1b252f;
+  border-radius: 1rem;
+  margin-top: 1rem;
+  padding: 1rem;
+  max-width: 500px;
+}
+
+
 /* Account Page */
 .account {
   display: flex;
@@ -421,6 +446,7 @@
   justify-content: space-between;
 }
 .exploreCategories a {
+  margin: 5px;
   width: 48%;
   color: #fff;
 }
@@ -481,7 +507,6 @@
     background-color: #fff;
   }
 
-
 }
 
 
@@ -493,6 +518,14 @@
 
 .pageContainer {
     width: 400px;
+  }
+
+  .exploreCategories {
+    display: block;
+  }
+
+  .exploreCategoryName {
+    margin: 8px;
   }
 }
 

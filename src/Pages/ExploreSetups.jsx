@@ -24,6 +24,18 @@ function ExploreSetups() {
                             className="exploreCategoryImg" />
                         <p className="exploreCategoryName">Programming</p>
                     </Link>
+                    <Link to="/category/security">
+                        <img src={categoryImg}
+                            alt="programming"
+                            className="exploreCategoryImg" />
+                        <p className="exploreCategoryName">Security</p>
+                    </Link>
+                    <Link to="/category/other">
+                        <img src={categoryImg}
+                            alt="programming"
+                            className="exploreCategoryImg" />
+                        <p className="exploreCategoryName">Other</p>
+                    </Link>
                 </div>
             </main>
         </div>
