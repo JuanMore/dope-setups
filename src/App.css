@@ -187,6 +187,61 @@
   border-radius: 2%;
 }
 
+
+.img-wrapper {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+.img-title {
+  position: absolute;
+  top: 1;
+  bottom: 18%;
+  left: 2%;
+  right: 0;
+  color: #fff;
+  font-size: 1rem;
+  visibility: hidden;
+  opacity: 0;
+
+  transition: opacity .3s, visibility .3s;
+}
+
+.img-description {
+  position: absolute;
+  top: 1;
+  bottom: 10%;
+  left: 2%;
+  right: 0;
+  padding: 12px 0 5px 0;
+  color: #fff;
+  font-size: .9rem;
+  visibility: hidden;
+  opacity: 0;
+
+  transition: opacity .3s, visibility .3s;
+}
+
+.more-like-this {
+  position: absolute;
+  top: 1;
+  bottom: 5%;
+  left: 2%;
+  right: 0;
+  color: #fff;
+  font-size: .9rem;
+  visibility: hidden;
+  opacity: 0;
+
+  transition: opacity .3s, visibility .3s;
+}
+
+.img-wrapper:hover .img-description, .img-wrapper:hover .img-title, .img-wrapper:hover .more-like-this {
+  visibility: visible;
+  opacity: 1;
+}
+
 /******** Login Page *******/
 
 .pageContainer {
@@ -351,6 +406,19 @@
   display: flex;
   justify-content: flex-end;
   padding-top: 10px;
+}
+
+.setupFormBtn {
+  background-color: #ffffff;
+  color: #1b252f;
+  border-radius: 1rem;
+  padding: 1rem 1.2rem;
+  margin-top: 2rem;
+  font-weight: 600;
+  max-width: 500px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .accountCard {

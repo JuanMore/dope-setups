@@ -12,7 +12,9 @@ import Categorize from './Pages/Categorize'
 import ExploreSetups from './Pages/ExploreSetups';
 import Login from './Pages/Login';
 import Profile from './Pages/Profile';
+import Setup from './Pages/Setup';
 import Register from './Pages/Register';
+import SetupForm from './Pages/SetupForm';
 import ForgotPassword from './Pages/ForgotPassword';
 import './App.css';
 
@@ -40,8 +42,10 @@ function App() {
          <Route path="/profile" element={<PrivateRoute />}>
               {/* Render that private route */}
               <Route path='/profile' element={<Profile />} />
-           </Route>
+            </Route>
+            <Route path='/category/:categoryName/:setupId' element={<Setup />}></Route>
           <Route path='/forgot-password' element={<ForgotPassword />} />
+          <Route path='/setup-form' element={<SetupForm />} />
         </Routes>
         <Footer />
       </div>

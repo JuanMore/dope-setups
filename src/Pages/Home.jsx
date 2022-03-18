@@ -6,6 +6,7 @@ import { db } from '../firebase.config'
 import {toast} from "react-toastify"
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry"
 import Spinner from "../Components/UI/Spinner"
+import {FaChevronRight} from "react-icons/fa"
 
 
 function Home() {
@@ -59,31 +60,36 @@ function Home() {
         {loading ? (
           <Spinner />
       ) : setups && setups.length > 0 ? (
-        <main>
-          <ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 750: 3, 1000: 3 }}>
-            
+          <main>
+          <ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 500: 2, 750: 3, 1000: 3 }}>
               <Masonry columnsCount={4} gutter="5px">
                 {setups.map((item) => (
-                  <div className="img-wrapper"
-                  key={item.id}
+                  <><div className="img-wrapper"
+                    key={item.id}
                   >
                     {/* {`/category/${setup.type}/${id}`} */}
-                  <Link to='/'>
-                <img
-                   className="setup-img-home"
-                    src={item.data.imgUrls[0]}
-                    alt= ""
+                    <Link to='/'>
+                      <img
+                        className="setup-img-home"
+                        src={item.data.imgUrls[0]}
+                        alt=""
                         style={{
                           width: "100%", height: "300px", display: "block", backgroundSize: "cover",
-                          backgroundPosition: "center", backgroundRepeat: "no-repeat"}}
-                          />
-                        </Link>
+                          backgroundPosition: "center", backgroundRepeat: "no-repeat"
+                        }} />
+                    </Link>
+                    <div className="btn-wrapper">
+                    </div>
+                    <p className="img-title">Emma Roberts</p>
+                    <p className="img-description">Hello World</p>
+                    <Link className="more-like-this" to={`/category/${item.data.type}`}>More like this <FaChevronRight size={10} /> </Link>
                       </div>
+                  </>
                 ))}
-              </Masonry>
-            </ResponsiveMasonry>
+              
+            </Masonry>
+          </ResponsiveMasonry>
           </main>
-            
           ) : (
               <p> No setups to display</p>
         )}

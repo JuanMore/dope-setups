@@ -7,7 +7,7 @@ import {toast} from "react-toastify"
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry"
 import Spinner from "../Components/UI/Spinner"
 
-function Categorize() {
+function Categorize({setup, id}) {
     const [setups, setSetups] = useState(null)
     const [loading, setLoading] = useState(true)
   
@@ -44,7 +44,6 @@ function Categorize() {
                 // set to false after we get the data 
                 setLoading(false)
             } catch (error) {
-                console.log(error)
                 toast.error('Could not retrieve data')
             }
         }
@@ -66,22 +65,20 @@ function Categorize() {
                 
                           <Masonry columnsCount={4} gutter="5px">
                               {setups.map((item) => (
-                                  <div className="img-wrapper"
-                                      key={item.id}
-                                  >
+                                 <>
                                       {/* {`/category/${setup.type}/${id}`} */}
-                                      <Link to='/'>
+                                      <Link to={`category/${item.data.type}/${item.id}`}>
                                           <img
                                               className="setup-img-home"
                                               src={item.data.imgUrls[0]}
-                                              alt=""
+                                              alt={`${item.data.type} setup`}
                                               style={{
                                                   width: "100%", height: "300px", display: "block", backgroundSize: "cover",
                                                   backgroundPosition: "center", backgroundRepeat: "no-repeat"
                                               }}
                                           />
                                       </Link>
-                                  </div>
+                                      </>
                               ))}
                           </Masonry>
                       </ResponsiveMasonry>
