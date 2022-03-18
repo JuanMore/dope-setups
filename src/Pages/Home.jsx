@@ -51,9 +51,6 @@ function Home() {
   }, [])
   return (
     <div className="setups-home">
-      <header>
-        <p className="homeHeader">Latest setups...</p>
-      </header>
    
         {/* Maybe a slider */}
 

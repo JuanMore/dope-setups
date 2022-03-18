@@ -1,7 +1,7 @@
 import NavLinks from "./NavLinks"
 import { useState } from 'react'
 function Navbar() {
-	const [open, setOpen] = useState(true)
+	const [open, setOpen] = useState(false)
 
 	return (
 		<nav className={`header__nav navbar ${open ? "toggle" : ""}`}>
