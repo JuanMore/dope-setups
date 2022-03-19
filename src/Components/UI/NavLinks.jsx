@@ -14,13 +14,13 @@ function NavLinks() {
 
             
             <ul className="nav-list-social">
-                <li className="nav-social-item"><a href="https://github.com/JuanMore" target="_blank" className="nav-link">
+                <li className="nav-social-item"><a href="https://github.com/JuanMore" target="_blank" rel="noreferrer" className="nav-link">
                     <FaGithub size={25} /></a>
                 </li>
-                <li className="nav-social-item"><a href="https://twitter.com/moreno_dev" target="_blank" className="nav-link">
+                <li className="nav-social-item"><a href="https://twitter.com/moreno_dev" target="_blank" rel="noreferrer" className="nav-link">
                     <FaTwitter size={25} /></a>
                 </li>
-                <li className="nav-social-item"><a href="https://www.linkedin.com/in/juan-moreno-29b913123/" target="_blank" className="nav-link">
+                <li className="nav-social-item"><a href="https://www.linkedin.com/in/juan-moreno-29b913123/" target="_blank" rel="noreferrer" className="nav-link">
                     <FaLinkedin size={25} /></a>
                 </li>
             </ul>
