@@ -63,8 +63,6 @@
     justify-content: center;
   }
 
-
-
 /* Navbar Styling */
 
 .navbar {
@@ -75,7 +73,7 @@
 	height: 100vh;
 	width: 250px;
 	display: flex;
-  z-index: 1;
+  z-index: 2;
 	justify-content: center;
 	align-items: center;
 	transition: position 2.9s;
@@ -315,6 +313,25 @@
   text-align: right;
 }
 
+
+.signInText,
+.signUpText {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.signInButton,
+.signUpButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 3rem;
+  height: 3rem;
+  background-color: var(--secondary-color);
+  border-radius: 50%;
+  border: none;
+}
+
 .signInBar,
 .signUpBar {
   margin-top: 3rem;
@@ -495,6 +512,13 @@
 }
 
 /***** Setup Form  *****/
+
+.flex-container {
+  display: flex;
+  gap: 2rem;
+  width: 100%;
+}
+
 .formLabel {
   font-weight: 600;
   margin-top: 1rem;
@@ -554,7 +578,8 @@
 }
 
 .formInputFile {
-  width: 25%;
+  width: 100%;
+  color: #1b252f;
 }
 .formInputFile::-webkit-file-upload-button {
   background-color: #e30b5c;
@@ -639,17 +664,112 @@
 }
 
 
+.shareIconDiv {
+  cursor: pointer;
+  position: fixed;
+  top: 2%;
+  right: 3%;
+  z-index: 2;
+  background-color:#e30b5c; 
+  border-radius: 50%;
+  width: 3rem;
+  height: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-@media (min-width: 1217px) {
-  .explore {
-    margin-bottom: 10rem;
-  }
+.linkCopied {
+  position: fixed;
+  top: 9%;
+  right: 5%;
+  z-index: 2;
+  background-color: #1b252f;
+  border-radius: 1rem;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
 }
-@media (max-height: 536) {
-  .explore {
-    margin-bottom: 10rem;
-  }
+
+/* Slider/Setup styles */
+
+.slider {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 40px;
+  width: 100%;
 }
+
+.alice-carousel__dots {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.alice-carousel__prev-btn,
+.alice-carousel__prev-btn-item,
+.alice-carousel__next-btn,
+.alice-carousel__next-btn-item {
+  display: none;
+}
+
+.alice-carousel__wrapper {
+  margin-bottom: -50px;
+}
+
+
+.sliderimg{
+  width: 100%;
+  height: 500px;
+  object-fit: cover;
+}
+
+/* Table */
+
+table {
+  padding-top: 20px;
+  width: 100%;
+}
+
+table th {
+  padding: 20px 0;
+  font-size: 1.2rem;
+  text-align: left;
+}
+
+table td {
+  padding: 15px;
+  text-align: left;
+}
+
+table tbody tr {
+  background-color:#1b252f;
+}
+
+.border-prop td:nth-of-type(2) {
+  width: 30px;
+}
+
+
+table tbody tr td:first-of-type {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+table tbody tr td:last-of-type {
+  text-align: center;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+table tbody tr.border-prop td:first-of-type {
+  border-right: 5px solid #e30b5c;
+}
+
+/* End Table */
+
 
 
 /* Footer */
@@ -683,14 +803,18 @@
 }
 
 
-
 @media(max-width: 700px){
   .logOutDiv {
     margin-top: 1rem;
   }
 
-.pageContainer {
+  .pageContainer {
     width: 400px;
+  }
+
+
+  .formButtons, .flex-container {
+    display: block;
   }
 
   .exploreCategories {
@@ -703,6 +827,18 @@
 }
 
 
+@media (min-width: 1217px) {
+  .explore {
+    margin-bottom: 10rem;
+  }
+}
+@media (max-height: 536) {
+  .explore {
+    margin-bottom: 10rem;
+  }
+}
+
+
 
 @media (min-width: 1024px) {
   .signInBar,
@@ -710,27 +846,8 @@
     justify-content: start;
   }
 
-
-
 }
 
-.signInText,
-.signUpText {
-  font-size: 1.5rem;
-  font-weight: 700;
-}
-
-.signInButton,
-.signUpButton {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 3rem;
-  height: 3rem;
-  background-color: var(--secondary-color);
-  border-radius: 50%;
-  border: none;
-}
 @media (min-width: 1024px) {
   .signInButton,
   .signUpButton {

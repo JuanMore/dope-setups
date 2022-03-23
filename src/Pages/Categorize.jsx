@@ -67,7 +67,7 @@ function Categorize({setup, id}) {
                               {setups.map((item) => (
                                  <>
                                       {/* {`/category/${setup.type}/${id}`} */}
-                                      <Link to={`category/${item.data.type}/${item.id}`}>
+                                      <Link to={`/category/${item.data.type}/${item.id}`}>
                                           <img
                                               className="setup-img-home"
                                               src={item.data.imgUrls[0]}

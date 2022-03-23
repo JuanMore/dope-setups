@@ -1,11 +1,21 @@
 import { useState, useEffect, useRef } from "react"
 import { getAuth, onAuthStateChanged } from "firebase/auth"
+import {
+    getStorage,
+    ref,
+    uploadBytesResumable,
+    getDownloadURL,
+} from 'firebase/storage'
+import {addDoc, collection, serverTimestamp} from 'firebase/firestore'
+import { db } from '../firebase.config'
+import {v4 as uuidv4} from "uuid"
 import { useNavigate } from 'react-router-dom'
 import Spinner from "../Components/UI/Spinner"
+import { toast } from "react-toastify"
 function SetupForm() {
-    const [loading, setLaoding] = useState(false)
+    const [loading, setLoading] = useState(false)
     const [formData, setFormData ] = useState({
-        type: 'programming',
+        type: 'gaming',
         name: 'Coder Coder',
         totalCost: 3000,
         chair: '',
@@ -61,13 +71,115 @@ function SetupForm() {
     }, [isMounted])
 
     // create onSubmit
-    const onSubmit = e => {
+    const onSubmit = async(e) => {
         e.preventDefault()
+        setLoading(true)
+        console.log(formData)
+        
+        if (images.length > 6) {
+            setLoading(false)
+            toast.error("Max 6 Images")
+            return
+        }
+        
+        // Store images in Firebase
+        const storeImage = async (image) => {
+            const uuid = uuidv4()
+            // create a promise
+            return new Promise((resolve, reject) => {
+                const storage = getStorage()
+                const fileName = `${auth.currentUser.uid}-${image.name}-${uuid}`
+
+                const storageRef = ref(storage, 'images/' + fileName)
+
+                // upload task
+                const uploadTask = uploadBytesResumable(storageRef, image)
+                uploadTask.on(
+                    'state_changed',
+                    (snapshot) => {
+                      const progress =
+                        (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+                      console.log('Upload is ' + progress + '% done')
+                      switch (snapshot.state) {
+                        case 'paused':
+                          console.log('Upload is paused')
+                          break
+                        case 'running':
+                          console.log('Upload is running')
+                          break
+                        default:
+                          break
+                      }
+                    },
+                    (error) => {
+                        // reject from our promise if error/fail
+                      reject(error)
+                    },
+                    () => {
+                      // Handle successful uploads on complete
+                      // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+                        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                          // resolve from promise if successul
+                        resolve(downloadURL)
+                      })
+                    }
+                  )
+            })
+        }
+
+        const imgUrls = await Promise.all(
+            // spread images and map through
+            // map takes in image and sets storeImage to each new image
+            [...images].map((image) => storeImage(image))
+        ).catch(() => {
+            setLoading(false)
+            toast.error("Images failed to uplpad")
+            return 
+        })
+
+        const submitFormCopy = {
+            ...formData,
+            imgUrls,
+            timestamp: serverTimestamp()
+        }
+
+        delete submitFormCopy.images
+        
+        const docRef = await addDoc(collection(db, 'setups'),
+            submitFormCopy)
+        setLoading(false)
+        toast.success("Setup successfully uploaded!")
+        navigate(`/category/${submitFormCopy.type}/${docRef.id}`)
+
+        setLoading(false)
     }
 
-    // create onMutate
-    const onMutate = () => {
-        
+    const onMutate = e => {
+        let boolean = null
+
+        if (e.target.value === 'true') {
+            boolean = true
+        }
+        if (e.target.value === 'false') {
+            boolean = false
+        }
+
+        // Files
+        if (e.target.files) {
+            setFormData((prevState) => ({
+                ...prevState,
+                images: e.target.files
+            }))
+        }
+
+        // Text or booleans/numbers
+        if (!e.target.files) {
+            setFormData((prevState) => ({
+                ...prevState,
+                // if value on left is null then use right
+                [e.target.id]: boolean ?? e.target.value,
+            }))
+        }
     }
 
     if (loading) {
@@ -108,6 +220,9 @@ function SetupForm() {
                           onClick={onMutate}
                       >Other</button>
                   </div>
+                  <div className="flex-container">
+
+                  <div className="flex-1">
                   <label className='formLabel'>Name</label>
           <input
             className='formInputName'
@@ -175,6 +290,8 @@ function SetupForm() {
             minLength='10'
             required
                   />
+                  </div>
+                  <div className="flex-2">
                   <label className='formLabel'>Headset</label>
           <input
             className='formInputName'
@@ -225,7 +342,7 @@ function SetupForm() {
                         className='formInputSmall'
                         type='number'
                         id='totalCost'
-                        value={`$${totalCost}`}
+                        value={totalCost}
                         onChange={onMutate}
                         maxLength='100000000'
                         minLength='50'
@@ -247,6 +364,8 @@ function SetupForm() {
             multiple
             required
           />
+                </div>
+                  </div>
           <button type='submit' className='primaryButton setupFormButton'>
             Upload to DopeSetups
           </button>

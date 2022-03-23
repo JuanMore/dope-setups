@@ -65,7 +65,7 @@ function Home() {
                     key={item.id}
                   >
                     {/* {`/category/${setup.type}/${id}`} */}
-                    <Link to='/'>
+                    <Link to={`/category/${item.data.type}/${item.id}`}>
                       <img
                         key={item.id}
                         className="setup-img-home"
