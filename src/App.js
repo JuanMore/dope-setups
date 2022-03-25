@@ -39,13 +39,15 @@ function App() {
           <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
             {/* private route */}
+            <Route path="/setup-form" element={<PrivateRoute />}>
+            <Route path="/setup-form" element={<SetupForm />} />
+              </Route>
          <Route path="/profile" element={<PrivateRoute />}>
               {/* Render that private route */}
               <Route path='/profile' element={<Profile />} />
             </Route>
             <Route path='/category/:categoryName/:setupId' element={<Setup />}></Route>
           <Route path='/forgot-password' element={<ForgotPassword />} />
-          <Route path='/setup-form' element={<SetupForm />} />
         </Routes>
         <Footer />
       </div>

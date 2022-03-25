@@ -1,5 +1,8 @@
 import { Link } from "react-router-dom"
-import categoryImg from "../imgs/1_workstation.jpeg"
+import gaming from "../imgs/gaming.jpeg"
+import programming from "../imgs/programming.jpeg"
+import security from "../imgs/security.jpeg"
+import other from "../imgs/other.jpeg"
 
 function ExploreSetups() {
     return (
@@ -13,25 +16,25 @@ function ExploreSetups() {
                 <p className="exploreCategoryHeading">Categories</p>
                 <div className="exploreCategories">
                     <Link to="/category/gaming">
-                        <img src={categoryImg}
+                        <img src={gaming}
                             alt="gaming"
                             className="exploreCategoryImg" />
                         <p className="exploreCategoryName">Gaming</p>
                     </Link>
                     <Link to="/category/programming">
-                        <img src={categoryImg}
+                        <img src={programming}
                             alt="programming"
                             className="exploreCategoryImg" />
                         <p className="exploreCategoryName">Programming</p>
                     </Link>
                     <Link to="/category/security">
-                        <img src={categoryImg}
+                        <img src={security}
                             alt="programming"
                             className="exploreCategoryImg" />
                         <p className="exploreCategoryName">Security</p>
                     </Link>
                     <Link to="/category/other">
-                        <img src={categoryImg}
+                        <img src={other}
                             alt="programming"
                             className="exploreCategoryImg" />
                         <p className="exploreCategoryName">Other</p>

@@ -6,7 +6,20 @@ import { db } from "../firebase.config"
 import AliceCarousel from 'react-alice-carousel';
 import 'react-alice-carousel/lib/alice-carousel.css';
 import Spinner from "../Components/UI/Spinner"
-import { FaShareAlt } from "react-icons/fa"
+import {
+  FaShareAlt,
+  FaChair,
+  FaDesktop,
+  FaPen,
+  FaToolbox,
+  FaDollarSign,
+  FaFire,
+  FaKeyboard,
+  FaMouse,
+  FaMicrophone
+} from "react-icons/fa"
+import { GrMonitor } from "react-icons/gr";
+import { GiDesk, GiOfficeChair } from "react-icons/gi";
 import { ReactComponent as DeleteIcon } from "../assets/svg/deleteIcon.svg"
 
 
@@ -27,6 +40,7 @@ function Setup() {
       const docSnap = await getDoc(docRef)
 
       if (docSnap.exists()) {
+        console.log(docSnap.data())
         setSetup(docSnap.data())
         setLoading(false)
       }
@@ -72,51 +86,46 @@ function Setup() {
                         <th>Setup Details</th>
                     </tr>
                 </thead>
-                <tbody>
-
+          <tbody>
                     <tr class="border-prop">
-                        <td>Ear Clean</td>
-                        <td></td>
+                        <td>{setup.name}</td>
+                        <td><FaFire /></td>
                     </tr>
                     <tr class="border-prop">
-                        <td>Teeth Brushing & Breath Spray</td>
-                        <td></td>
+                        <td>{setup.desk}</td>
+                        <td><GiDesk size={20} /></td>
                     </tr>
                     <tr class="border-prop">
-                        <td>Anal Gland Expression</td>
-                        <td></td>
+                        <td>{setup.computer}</td>
+                        <td><FaDesktop /></td>
                     </tr>
                     <tr class="border-prop">
-                        <td>Dematt/Brush-Out</td>
-                        <td></td>
+                        <td>{setup.keyboard}</td>
+                        <td><FaKeyboard /></td>
                     </tr>
                     <tr class="border-prop">
-                      <td>Nail Clip</td>
-                      <td></td>
+                      <td>{setup.mouse}</td>
+                      <td><FaMouse /></td>
                     </tr>
                     <tr class="border-prop">
-                        <td>Nail Grind (With Dremel)</td>
-                        <td></td>
+                        <td>{setup.microphone}</td>
+                        <td><FaMicrophone /></td>
                     </tr>
                     <tr class="border-prop">
-                        <td>Sanitary Trim</td>
-                        <td></td>
+                        <td>{setup.monitor}</td>
+                        <td><GrMonitor /></td>
                     </tr>
                     <tr class="border-prop">
-                        <td>Eye Area Trim</td>
-                        <td></td>
+                        <td>{setup.chair}</td>
+                        <td><GiOfficeChair size={20} /></td>
                     </tr>
                     <tr class="border-prop">
-                        <td>Paw Pads Shaved  Feet Trimmed</td>
-                        <td>$20</td>
+                        <td>{setup.extraAccessories}</td>
+                        <td><FaToolbox /></td>
                     </tr>
                     <tr class="border-prop">
-                        <td>Full Face Trim</td>
-                        <td>$15-$20</td>
-                    </tr>
-                    <tr class="border-prop">
-                        <td> Combine </td>
-                            <td>$40</td>
+                       <td>Estimated Cost</td>
+                      <td>${setup.totalCost}</td>
                     </tr>
                     
                 </tbody>

@@ -3,9 +3,10 @@ import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import { collection, getDocs, query, where, orderBy, limit, startAfter } from "firebase/firestore"
 import { db } from '../firebase.config'
-import {toast} from "react-toastify"
+import { toast } from "react-toastify"
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry"
 import Spinner from "../Components/UI/Spinner"
+import { FaChevronRight } from "react-icons/fa"
 
 function Categorize({setup, id}) {
     const [setups, setSetups] = useState(null)
@@ -65,7 +66,7 @@ function Categorize({setup, id}) {
                 
                           <Masonry columnsCount={4} gutter="5px">
                               {setups.map((item) => (
-                                 <>
+                                 <><div className="img-wrapper">
                                       {/* {`/category/${setup.type}/${id}`} */}
                                       <Link to={`/category/${item.data.type}/${item.id}`}>
                                           <img
@@ -78,6 +79,10 @@ function Categorize({setup, id}) {
                                               }}
                                           />
                                       </Link>
+                                      <div className="btn-wrapper">
+                                        </div>
+                                        <p className="img-title-1">{item.data.name}</p>
+                                        </div>
                                       </>
                               ))}
                           </Masonry>

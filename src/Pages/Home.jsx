@@ -52,8 +52,6 @@ function Home() {
   return (
     <div className="setups-home">
    
-        {/* Maybe a slider */}
-
         {loading ? (
           <Spinner />
       ) : setups && setups.length > 0 ? (
@@ -62,7 +60,6 @@ function Home() {
               <Masonry columnsCount={4} gutter="5px">
                 {setups.map((item) => (
                   <><div className="img-wrapper"
-                    key={item.id}
                   >
                     {/* {`/category/${setup.type}/${id}`} */}
                     <Link to={`/category/${item.data.type}/${item.id}`}>
@@ -70,7 +67,7 @@ function Home() {
                         key={item.id}
                         className="setup-img-home"
                         src={item.data.imgUrls[0]}
-                        alt=""
+                        alt="setup image"
                         style={{
                           width: "100%", height: "300px", display: "block", backgroundSize: "cover",
                           backgroundPosition: "center", backgroundRepeat: "no-repeat"
@@ -78,8 +75,8 @@ function Home() {
                     </Link>
                     <div className="btn-wrapper">
                     </div>
-                    <p className="img-title">Emma Roberts</p>
-                    <p className="img-description">Hello World</p>
+                    <p className="img-title">{item.data.name}</p>
+                    <p className="img-description">{item.data.type}</p>
                     <Link className="more-like-this" to={`/category/${item.data.type}`}>More like this <FaChevronRight size={10} /> </Link>
                       </div>
                   </>
