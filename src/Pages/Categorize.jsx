@@ -6,11 +6,12 @@ import { db } from '../firebase.config'
 import { toast } from "react-toastify"
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry"
 import Spinner from "../Components/UI/Spinner"
-import { FaChevronRight } from "react-icons/fa"
 
 function Categorize({setup, id}) {
     const [setups, setSetups] = useState(null)
     const [loading, setLoading] = useState(true)
+    const [lastFetchedSetup, setLastFetchedSetup] = useState(null)
+
   
     const params = useParams()
 
@@ -30,11 +31,12 @@ function Categorize({setup, id}) {
                 // Execute query
                 const querySnap = await getDocs(q)
 
+                const lastVisible = querySnap.docs[querySnap.docs.length - 1]
+                setLastFetchedSetup(lastVisible)
+
                 const setups = []
 
                 querySnap.forEach((doc) => {
-                console.log(doc.data())
-
                     return setups.push({
                         id: doc.id,
                         data: doc.data()
@@ -51,6 +53,47 @@ function Categorize({setup, id}) {
 
         fetchSetups()
     }, [params.categoryName])
+
+    // pagination/load more setups
+  const fetchMoreSetups = async () => {
+    try {
+      // get a reference 
+      const setupsRef = collection(db, 'setups')
+
+      // Create a query
+     // set specifications
+    // check url for query string - 
+        const q = query(setupsRef,
+            orderBy('timestamp', 'desc'),
+            where('type', '==',
+            params.categoryName),
+            startAfter(lastFetchedSetup), limit(10))
+
+      // Execute query
+      const querySnap = await getDocs(q)
+
+      const lastVisible = querySnap.docs[querySnap.docs.length - 1]
+      setLastFetchedSetup(lastVisible)
+
+      // loop through snapshot to retrieve data
+      const setups = []
+      querySnap.forEach((doc) => {
+        return setups.push({
+          id: doc.id,
+          data: doc.data()
+        })
+        
+      })
+
+      // set useState to previous state(setups) + more fetched setups to array
+      setSetups((prevState) => [...prevState, ...setups])
+      setLoading(false)
+
+    } catch {
+      toast.error('No more setups found')
+    }
+  }
+
 
   return (
     <div className="category">
@@ -70,6 +113,7 @@ function Categorize({setup, id}) {
                                       {/* {`/category/${setup.type}/${id}`} */}
                                       <Link to={`/category/${item.data.type}/${item.id}`}>
                                           <img
+                                              key={item.id}
                                               className="setup-img-home"
                                               src={item.data.imgUrls[0]}
                                               alt={`${item.data.type} setup`}
@@ -87,6 +131,11 @@ function Categorize({setup, id}) {
                               ))}
                           </Masonry>
                       </ResponsiveMasonry>
+                        <br />
+                        <br />
+                        {lastFetchedSetup && (
+                        <p className="loadMore" onClick={fetchMoreSetups}>Load More</p>
+                        )}
                   </main>
               ) : <p>No setups to display for '{params.categoryName}'</p>
               }

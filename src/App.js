@@ -15,6 +15,7 @@ import Profile from './Pages/Profile';
 import Setup from './Pages/Setup';
 import Register from './Pages/Register';
 import SetupForm from './Pages/SetupForm';
+import EditSetup from './Pages/EditSetup';
 import ForgotPassword from './Pages/ForgotPassword';
 import './App.css';
 
@@ -40,9 +41,12 @@ function App() {
             <Route path='/register' element={<Register />} />
             {/* private route */}
             <Route path="/setup-form" element={<PrivateRoute />}>
-            <Route path="/setup-form" element={<SetupForm />} />
-              </Route>
-         <Route path="/profile" element={<PrivateRoute />}>
+              <Route path="/setup-form" element={<SetupForm />} />
+            </Route>
+            <Route path="/edit-setup/:setupId" element={<PrivateRoute />}>
+              <Route path="/edit-setup/:setupId" element={<EditSetup />} />
+            </Route>
+            <Route path="/profile" element={<PrivateRoute />}>
               {/* Render that private route */}
               <Route path='/profile' element={<Profile />} />
             </Route>

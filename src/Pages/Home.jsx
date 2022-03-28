@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom"
 import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
-import { collection, getDocs, query, where, orderBy, limit, startAfter } from "firebase/firestore"
+import { collection, getDocs, query, orderBy, limit, startAfter } from "firebase/firestore"
 import { db } from '../firebase.config'
 import {toast} from "react-toastify"
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry"
@@ -12,8 +11,8 @@ import {FaChevronRight} from "react-icons/fa"
 function Home() {
   const [setups, setSetups] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [lastFetchedSetup, setLastFetchedSetup] = useState(null)
 
-  const params = useParams()
   
   // create useEffect
   useEffect(() => {
@@ -27,6 +26,9 @@ function Home() {
 
         // Execute query
         const querySnap = await getDocs(q)
+
+        const lastVisible = querySnap.docs[querySnap.docs.length - 1]
+        setLastFetchedSetup(lastVisible)
 
         // loop through snapshot to retrieve data
         const setups = []
@@ -49,6 +51,44 @@ function Home() {
 
     fetchSetups()
   }, [])
+
+  // pagination/load more setups
+  const fetchMoreSetups = async () => {
+    try {
+      // get a reference 
+      const setupsRef = collection(db, 'setups')
+
+      // create ,query
+      const q = query(setupsRef,
+        orderBy('timestamp', 'desc'),
+        startAfter(lastFetchedSetup),
+        limit(10))
+
+      // Execute query
+      const querySnap = await getDocs(q)
+
+      const lastVisible = querySnap.docs[querySnap.docs.length - 1]
+      setLastFetchedSetup(lastVisible)
+
+      // loop through snapshot to retrieve data
+      const setups = []
+      querySnap.forEach((doc) => {
+        return setups.push({
+          id: doc.id,
+          data: doc.data()
+        })
+        
+      })
+
+      // set useState to previous state(setups) + more fetched setups to array
+      setSetups((prevState) => [...prevState, ...setups])
+      setLoading(false)
+
+    } catch {
+      toast.error('Could not retrieve data')
+    }
+  }
+
   return (
     <div className="setups-home">
    
@@ -67,7 +107,7 @@ function Home() {
                         key={item.id}
                         className="setup-img-home"
                         src={item.data.imgUrls[0]}
-                        alt="setup image"
+                        alt="setup"
                         style={{
                           width: "100%", height: "300px", display: "block", backgroundSize: "cover",
                           backgroundPosition: "center", backgroundRepeat: "no-repeat"
@@ -83,7 +123,12 @@ function Home() {
                 ))}
               
             </Masonry>
-          </ResponsiveMasonry>
+            </ResponsiveMasonry>
+            <br />
+            <br />
+            {lastFetchedSetup && (
+              <p className="loadMore" onClick={fetchMoreSetups}>Load More</p>
+            )}
           </main>
           ) : (
               <p> No setups to display</p>

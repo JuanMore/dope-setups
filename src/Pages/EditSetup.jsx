@@ -6,13 +6,15 @@ import {
     uploadBytesResumable,
     getDownloadURL,
 } from 'firebase/storage'
-import {addDoc, collection, serverTimestamp} from 'firebase/firestore'
+import {doc, updateDoc, getDoc, serverTimestamp} from 'firebase/firestore'
 import { db } from '../firebase.config'
 import {v4 as uuidv4} from "uuid"
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import Spinner from "../Components/UI/Spinner"
 import { toast } from "react-toastify"
-function SetupForm() {
+
+function EditSetup() {
+    const [setup, setSetup] = useState(false)
     const [loading, setLoading] = useState(false)
     const [formData, setFormData ] = useState({
         type: 'gaming',
@@ -48,8 +50,44 @@ function SetupForm() {
     // init variables
     const auth = getAuth()
     const navigate = useNavigate()
+    const params = useParams()
     const isMounted = useRef(true)
 
+
+    // redirect if setup does not belong to user
+    useEffect(() => {
+        if (setup && setup.userRef !== auth.currentUser.uid) {
+            toast.error('You are not authorized to edit this setup')
+            navigate('/')
+        }
+    })
+
+    // fetch setup to edit
+    useEffect(() => {
+        setLoading(true)
+        const fetchSetup = async () => {
+            // create reference and set to variable docRef
+            const docRef = doc(db, 'setups', params.setupId)
+
+            //create snap shot
+            const docSnap = await getDoc(docRef)
+
+            // if setup exists set contents to state
+            if (docSnap.exists()) {
+                setSetup(docSnap.data())
+                setFormData({...docSnap.data()})
+                setLoading(false)
+            } else {
+                navigate('/')
+                toast.error('Setup does not exist')
+            }
+
+        }
+
+        fetchSetup()
+    }, [params.setupId, navigate])
+
+    // sets userRef to logged in user
     useEffect(() => {
 
         // fix memory leak
@@ -144,8 +182,8 @@ function SetupForm() {
 
         delete submitFormCopy.images
         
-        const docRef = await addDoc(collection(db, 'setups'),
-            submitFormCopy)
+        const docRef = doc(db, 'setups', params.setupId)
+        await updateDoc(docRef, submitFormCopy)
         setLoading(false)
         toast.success("Setup successfully uploaded!")
         navigate(`/category/${submitFormCopy.type}/${docRef.id}`)
@@ -187,7 +225,7 @@ function SetupForm() {
   return (
     <div className="profile">
           <header>
-              <p className="pageHeader">Post your Dope Setup</p>
+              <p className="pageHeader">Edit your Setup</p>
           </header>
 
           <main>
@@ -366,7 +404,7 @@ function SetupForm() {
                 </div>
                   </div>
           <button type='submit' className='primaryButton setupFormButton'>
-            Upload to DopeSetups
+            Edit Setup
           </button>
          
               </form>
@@ -375,4 +413,4 @@ function SetupForm() {
   )
 }
 
-export default SetupForm
+export default EditSetup
