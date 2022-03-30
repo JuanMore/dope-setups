@@ -170,7 +170,7 @@ function EditSetup() {
             [...images].map((image) => storeImage(image))
         ).catch(() => {
             setLoading(false)
-            toast.error("Images failed to uplpad")
+            toast.error("Images failed to upload. Ensure image(s) size does not exceed 2Mb.")
             return 
         })
 
