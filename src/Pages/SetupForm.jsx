@@ -359,7 +359,7 @@ function SetupForm() {
             id='images'
             onChange={onMutate}
             max='6'
-            accept='.jpg,.png,.jpeg'
+            accept='.jpg,.png,.jpeg,.HEIC'
             multiple
             required
           />
