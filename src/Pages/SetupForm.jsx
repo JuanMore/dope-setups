@@ -17,7 +17,7 @@ function SetupForm() {
     const [formData, setFormData ] = useState({
         type: 'gaming',
         name: '',
-        totalCost: 3000,
+        totalCost: 5000,
         chair: '',
         computer: '',
         desk: '',
